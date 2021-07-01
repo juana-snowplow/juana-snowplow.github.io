@@ -31,3 +31,42 @@ document.body.style.background = generateRandomGradients();
 document.getElementById('button').addEventListener('click', () => {
   document.body.style.background = generateRandomGradients();
 });
+
+
+snowplow('newTracker', 'sp', '{{https://com-snowplowanalytics-dev1.mini.snplow.net}}', {
+    appId: 'my-app-id',
+    platform: 'web',
+    cookieDomain: null,
+    discoverRootDomain: true,
+    cookieName: '_sp_',
+    cookieSameSite: 'None',
+    cookieSecure: true,
+    encodeBase64: true,
+    respectDoNotTrack: false,
+    pageUnloadTimer: 500,
+    forceSecureTracker: false,
+    eventMethod: 'post',
+    bufferSize: 1,
+    maxPostBytes: 40000,
+    postPath: '/custom/path',
+    crossDomainLinker: function (linkElement) {
+      return (linkElement.href === 'http://acme.de' || linkElement.id === 'crossDomainLink');
+    },
+    cookieLifetime: 63072000,
+    stateStorageStrategy: 'cookieAndLocalStorage',
+    maxLocalStorageQueueSize: 1000,
+    resetActivityTrackingOnPageView: true,
+    connectionTimeout: 5000, // Available from 2.15.0
+    skippedBrowserFeatures: [], // Available from 2.15.0
+    anonymousTracking: false, // Available from 2.15.0
+    // anonymousTracking: { withSessionTracking: true } // Available from 2.15.0
+    // anonymousTracking: { withSessionTracking: true, withServerAnonymisation: true } // Available from 2.17.0
+    contexts: {
+      webPage: true,
+      performanceTiming: true,
+      gaCookies: true,
+      geolocation: false,
+      clientHints: true, // Available from 2.15.0
+      // clientHints: { includeHighEntropy: true } // Optional
+    }
+  });
